@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>StaffList</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div id="container">
+            <div id="header">
+                <h1>My Movie Site</h1>
+            </div>
+            @RenderPage("~/Shared/_ViewStart.cshtml")
+            <div id="main">
+                @RenderBody()
+            </div>
+        </div>
+    </header>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - StaffList - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

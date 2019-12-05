@@ -1,0 +1,50 @@
+﻿@{
+   Layout = "~/_Layout.cshtml";
+
+    var db = Database.Open("EmployeesAssessment");
+    var selectCommand = "SELECT * FROM Employees";
+    var searchTerm = "";
+    
+    if (!Request.QueryString["searchName"].IsEmpty())
+    { 
+        selectCommand = "SELECT * FROM Employees WHERE  FirstName = @0";
+        searchTerm = Request.QueryString["searchName"];
+    }
+
+    if (!Request.QueryString["searchYearsInExperience"].IsEmpty())
+    {
+        selectCommand = "SELECT * FROM  Employees WHERE YearsInExperience LIKE @0";
+        searchTerm = "%" + Request.QueryString["searchYearsInExperience"] + "%";
+    }
+
+    var selectedData = db.Query(selectCommand, searchTerm);
+    var grid = new WebGrid(source: selectedData, defaultSort: "Genre", rowsPerPage: 3);
+}
+<h2>List Employees </h2>
+<form method="get">
+    <div>
+        <label for="searchName">First Name to look for </label>>
+        <input type="text" name="searchName"
+               value="@Request.QueryString["searchName"]" />
+        <input type="Submit" value="Search FirstName" /><br />
+        (Leave blank to list all movies.)<br />
+    </div>
+    <div> 
+        <label for="SearchYearsInExperience">Employees Years in experience contains the following:</label>
+        <input type="text" name="searchYearsInExperience" value="@Request.QueryString["searchYearsInExperience"]" />
+        <input type="Submit" value="Search YearsInExperience" /><br />
+    </div>
+</form>
+<div>
+    @grid.GetHtml(
+        tableStyle: "grid",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+grid.Column("First Name"), 
+grid.Column("Last Name"),
+grid.Column("Years in Experience")
+)
+)
+</div>
+}
